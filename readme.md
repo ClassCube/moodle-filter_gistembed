@@ -102,6 +102,12 @@ Forum button. You should see something like this.
 
 And that's it. You're all set. 
 
+#### Embedding single files
+If you're embedding a gist with multiple files, normally all files will embed. If you'd rather
+embed only a single file add `?file=Filename.ext` to the end of the URL that you paste into
+Moodle and only that file will embed. If that file doesn't exist in your gist nothing
+will embed. 
+
 ### Settings
 
 There really aren't any. Just paste in the link.

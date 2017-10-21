@@ -1,17 +1,15 @@
 <?php
 
 class filter_gistembed extends moodle_text_filter {
-    
-    public function filter($text, array $options = array()) { 
-        $cnt = preg_match_all('/https?:\/\/gist\.github\.com\/(.*?)\/([a-f0-9]*)/', $text, $matches);
-        if ($cnt) {
-            for ($i=0; $i<$cnt; ++$i) {
-                $script = '<script src="https://gist.github.com/' . $matches[1][$i] . '/' . $matches[2][$i] . '.js"></script>'; 
-                 $text = str_replace($matches[0][$i], $script, $text); 
-            }
-        }
-        return $text; 
-    }
-    
-}
 
+    public function filter( $text, array $options = [ ] ) {
+        return preg_replace_callback( '/https?:\/\/gist\.github\.com\/(.*?)\/([a-f0-9]*)(\?file=[^\s<>]*)?/', function($matches) {
+            //echo '<pre>' . print_r($matches, true) . '</pre>';
+            $src = 'https://gist.github.com/' . $matches[1] . '/' . $matches[2] . '.js';
+            if (!empty($matches[3])) {
+                $src .= $matches[3];
+            }
+            return '<script src="' . $src . '"></script>';
+        }, $text );
+    }
+}
